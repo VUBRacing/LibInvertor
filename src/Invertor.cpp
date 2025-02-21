@@ -1,6 +1,6 @@
 #include "Invertor.h"
 
-void Invertor::setup(CANLibrary *mycan) {
+void Invertor::setup(CANAdafruit *mycan) {
     CAN = *mycan;
 }
 

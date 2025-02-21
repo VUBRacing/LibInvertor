@@ -7,7 +7,7 @@
 
 class Invertor {
 public:
-    void setup(CANLibrary *mycan);
+    void setup(CANAdafruit *mycan);
     void Beginrequest(int _Invertor_ID, int time_interval);
     void SimpleBeginSequence(int _Inverter_ID);
     void BeginSequence_beforeprecharge(int _Inverter_ID);
@@ -30,7 +30,7 @@ public:
     void SetSpeed(int _Inverter_ID, int speed);
 
 private:
-    CANLibrary CAN;
+    CANAdafruit CAN;
     int m_speed;
     int m_torque;
     int m_status;
