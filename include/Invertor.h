@@ -13,6 +13,7 @@ public:
     void BeginSequence_beforeprecharge(int _Inverter_ID);
     bool Beginsequence_beforeprechargeCHECK(Message message, int _Invertor_RX_ID);
     void BeginSequence_afterprecharge(int _Inverter_ID);
+    bool Beginsequence_afterprechargeCHECK(Message message, int _Invertor_RX_ID);
     void Stop(int _Inverter_ID);
     void LockInverter(int _Inverter_ID);
     void ClearError(int _Inverter_ID);
