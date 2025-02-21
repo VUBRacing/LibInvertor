@@ -181,9 +181,9 @@ void Invertor::UnlockInverter(int _Inverter_ID) {
 void Invertor::SetTorque(int _Inverter_ID, int _torque) {
     Message message;
     message.id = _Inverter_ID;
-    message.data_field.push_back(0x3D);
-    message.data_field.push_back(regID);
-    message.data_field.push_back(0x00);
+    message.data_field.push_back(0x90);
+    message.data_field.push_back(_torque & 0xFF);
+    message.data_field.push_back((_torque >>= 8) & 0xFF);
 
     CAN.send(message);
 }
