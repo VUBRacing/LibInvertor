@@ -66,8 +66,8 @@ void Invertor::BeginSequence_afterprecharge(int _Inverter_ID) {
 
 bool Invertor::Beginsequence_afterprechargeCHECK(Message message, int _Invertor_RX_ID){
     if(message.id != _Invertor_RX_ID) return false;
-    if (message.data_field[0] != 1 ) return false;
-    if (message.data_field[1] != 1) return false;
+    if (message.data_field[0] != 0x32 ) return false;
+    if (message.data_field[3] != 1) return false;
     return true; 
   }
 
