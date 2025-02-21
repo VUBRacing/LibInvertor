@@ -1,7 +1,7 @@
 #ifndef INVERTOR_H
 #define INVERTOR_H
 
-#include <CAN_Library.h>
+#include <CAN_Adafruit.h>
 #include <Invertor_IDs.h>
 #include <Arduino.h>
 

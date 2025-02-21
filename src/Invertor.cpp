@@ -243,16 +243,7 @@ void Invertor::Stop_transmitting(int _Inverter_ID) {
     CAN.send(message);
 }
 
-/**
- * From the special function document of edward from unitek
- * Send the recommend value in a CAN messages
- * See pg 27, section 4.10 
- * 
- */
-void Invertor::Auto_CANmessages(int _Inverter_ID) {
-    Message message = {_Inverter_ID, 22, {0xdc, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01}};
-    CAN.send(message);
-}
+
 
 /**
  * Changes the transmitting adress
