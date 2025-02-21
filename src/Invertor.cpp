@@ -10,6 +10,12 @@ void Invertor::Beginrequest(int _Invertor_ID, int time_interval) {
     Cyclic_transmitting_request(_Invertor_ID, RegID_ActualCurrent, time_interval);
 }
 
+/**
+ * simple beginsequence for the inverter
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ * geeft geen respons van de invertor
+ * Source: mail Unitek
+ */
 void Invertor::SimpleBeginSequence(int _Inverter_ID) {
     LockInverter(_Inverter_ID);
     delay(1);
@@ -17,6 +23,14 @@ void Invertor::SimpleBeginSequence(int _Inverter_ID) {
     delay(1);
 }
 
+/**
+ * beginsequence of the inverter before the precharge is done
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ *
+ * Invertor antwoord op statusmask met
+ * 
+ * Source: mail Unitek
+ */
 void Invertor::BeginSequence_beforeprecharge(int _Inverter_ID) {
     LockInverter(_Inverter_ID);
     delay(1);
@@ -32,6 +46,12 @@ bool Invertor::Beginsequence_beforeprechargeCHECK(Message message, int _Invertor
     return true;
 }
 
+/**
+ * beginsequence of the invertor after the precharge is done
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ *
+ * source: mail Unitek
+ */
 void Invertor::BeginSequence_afterprecharge(int _Inverter_ID) {
     ClearError(_Inverter_ID);
     delay(1);
@@ -43,72 +63,212 @@ void Invertor::BeginSequence_afterprecharge(int _Inverter_ID) {
     delay(1);
 }
 
+/**
+ * Stop the inverter
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ */
 void Invertor::Stop(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x51, 0x04, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x51);
+    message.data_field.push_back(0x04);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * lock the inverter
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ * No CAN respons from the invertor
+ */
 void Invertor::LockInverter(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x51, 0x04, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x51);
+    message.data_field.push_back(0x04);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * clears the invertor
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ * No CAN respons from the invertor
+ */
 void Invertor::ClearError(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x8E, 0x00, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x8E);
+    message.data_field.push_back(0x00);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * Read Status
+ * Geeft een waarde terug waarschijnelijk over de status in de invertor
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ */
 void Invertor::ReadStatusMask(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x3D, 0x40, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x3D);
+    message.data_field.push_back(0x40);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * Check for errors bit
+ * Invertor antwoord met de bit error
+ *    error :
+ *    No error :
+ * 
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ */
 void Invertor::CheckErrorBit(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x3D, 0x40, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x3D);
+    message.data_field.push_back(0x40);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * Checks for errors
+ * Answer of the invertor
+ *  Error :
+ *  No error : 
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ */
 void Invertor::CheckError(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x3D, 0x8F, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x3D);
+    message.data_field.push_back(0x8F);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * Unlock the inverter
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ * No CAN respons of the invertor
+ */
 void Invertor::UnlockInverter(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x51, 0x00, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x51);
+    message.data_field.push_back(0x00);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * Set the torque of the motor
+ * @param _Inverter_ID ID from inverter in CAN_ID
+ * @param torque the torque of the motor
+ * No answer of the invertor
+ */
 void Invertor::SetTorque(int _Inverter_ID, int _torque) {
-    Message message = {_Inverter_ID, {0x90, _torque & 0xFF, (_torque >> 8) & 0xFF}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x3D);
+    message.data_field.push_back(regID);
+    message.data_field.push_back(0x00);
+
     CAN.send(message);
 }
 
+/**
+ * Transmitting request Sending once
+ *@param _Inverter_ID ID from inverter in CAN_ID
+ *@param regID regbit to send, see CAN manual
+ * CAN respons of the needed regValue
+ */
 void Invertor::Transmitting_request(int _Inverter_ID, int regID) {
-    Message message = {_Inverter_ID, {0x3D, regID, 0x00}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x3D);
+    message.data_field.push_back(regID);
+    message.data_field.push_back(time_interval);
+
     CAN.send(message);
 }
 
+/**
+ * Cycic Transmitting request
+ *@param _Inverter_ID ID from inverter in CAN_ID
+ *@param regID regbit to send, see CAN manual
+ *@param time_interval 0-254ms time interval for transmittion
+ *cyclic CAN respons of needed regValue
+ */
 void Invertor::Cyclic_transmitting_request(int _Inverter_ID, int regID, int time_interval) {
-    Message message = {_Inverter_ID, {0x3D, regID, time_interval}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x3D);
+    message.data_field.push_back(regID);
+    message.data_field.push_back(time_interval);
+
     CAN.send(message);
 }
 
+/**
+ * Stop Cycic Transmitting request
+ *@param _Inverter_ID ID from inverter in CAN_ID
+ *No CAN respons from the inverter
+ */
 void Invertor::Stop_transmitting(int _Inverter_ID) {
-    Message message = {_Inverter_ID, {0x3D, 0x00, 0xff}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x3D);
+    message.data_field.push_back(0x00);
+    message.data_field.push_back(0xff);
+
     CAN.send(message);
 }
 
+/**
+ * From the special function document of edward from unitek
+ * Send the recommend value in a CAN messages
+ * See pg 27, section 4.10 
+ * 
+ */
 void Invertor::Auto_CANmessages(int _Inverter_ID) {
     Message message = {_Inverter_ID, 22, {0xdc, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01}};
     CAN.send(message);
 }
 
+/**
+ * Changes the transmitting adress
+ * @param _Inverter_ID previous adress
+ * @param adress New adress
+ * No CAN respons from the inverter
+ * (pls do not use)
+ */
 void Invertor::Change_transmitting_address(int _Inverter_ID, int adress) {
-    Message message = {_Inverter_ID, {0x68, adress}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x68);
+    message.data_field.push_back(adress);
+
     CAN.send(message);
 }
 
 void Invertor::SetSpeed(int _Inverter_ID, int speed) {
-    Message message = {_Inverter_ID, {0x31, speed & 0xFF, (speed >> 8) & 0xFF}};
+    Message message;
+    message.id = _Inverter_ID;
+    message.data_field.push_back(0x31);
+    message.data_field.push_back(speed & 0xFF);
+    message.data_field.push_back((speed >>= 8) & 0xFF);
+
     CAN.send(message);
 }
