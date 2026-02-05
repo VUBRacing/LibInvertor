@@ -1,13 +1,13 @@
 #ifndef INVERTOR_H
 #define INVERTOR_H
 
-#include <CAN_Adafruit.h>
+#include <CAN_Library.h>
 #include <Invertor_IDs.h>
 #include <Arduino.h>
 
 class Invertor {
 public:
-    void setup(CANAdafruit *mycan);
+    void setup(CANLibrary *mycan);
     void Beginrequest(int _Invertor_ID, int time_interval);
     void SimpleBeginSequence(int _Inverter_ID);
     void BeginSequence_beforeprecharge(int _Inverter_ID);
@@ -30,7 +30,7 @@ public:
     void SetSpeed(int _Inverter_ID, int speed);
 
 private:
-    CANAdafruit CAN;
+    CANLibrary CAN;
     int m_speed;
     int m_torque;
     int m_status;
