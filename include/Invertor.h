@@ -2,12 +2,21 @@
 #define INVERTOR_H
 
 #include <CAN_Library.h>
+#include <CAN_Adafruit.h>
+#include <CAN_RP2040.h>
 #include <Invertor_IDs.h>
 #include <Arduino.h>
 
+
+
 class Invertor {
 public:
-    void setup(CANLibrary *mycan);
+    #if defined(ARDUINO_FEATHER_M4_CAN)
+        void setup(CANAdafruit *mycan);
+    #else
+        void setup(CANRP2040 *mycan);
+    #endif
+    
     void Beginrequest(int _Invertor_ID, int time_interval);
     void SimpleBeginSequence(int _Inverter_ID);
     void BeginSequence_beforeprecharge(int _Inverter_ID);
@@ -31,6 +40,12 @@ public:
 
 private:
     CANLibrary CAN;
+
+    #if defined(ARDUINO_FEATHER_M4_CAN)
+        CANAdafruit CAN;
+    #else
+        CANRP2040 CAN
+    #endif
     int m_speed;
     int m_torque;
     int m_status;

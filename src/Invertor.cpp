@@ -1,8 +1,14 @@
 #include "Invertor.h"
 
-void Invertor::setup(CANLibrary *mycan) {
-    CAN = *mycan;
-}
+#if defined(ARDUINO_FEATHER_M4_CAN)
+    void Invertor::setup(CANAdafruit *mycan) {
+        CAN = *mycan;
+    }
+#else
+    void Invertor::setup(CANRP2040 *mycan) {
+        CAN = *mycan;
+    }
+#endif
 
 void Invertor::Beginrequest(int _Invertor_ID, int time_interval) {
     Cyclic_transmitting_request(_Invertor_ID, RegID_NominalMotorVoltage, time_interval);
