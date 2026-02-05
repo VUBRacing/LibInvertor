@@ -39,12 +39,10 @@ public:
     void SetSpeed(int _Inverter_ID, int speed);
 
 private:
-    CANLibrary CAN;
-
     #if defined(ARDUINO_FEATHER_M4_CAN)
         CANAdafruit CAN;
     #else
-        CANRP2040 CAN
+        CANRP2040 CAN;
     #endif
     int m_speed;
     int m_torque;
