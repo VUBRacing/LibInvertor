@@ -1,4 +1,5 @@
 #include "DTI.h"
+#include "DTI_IDs.h"
 
 /* The DTI hope after the UK race.
 Goal: more power, faster car
@@ -60,7 +61,7 @@ void DTI::BigEndian(int number, uint8_t* buffer, uint8_t length) {
 void DTI::SetACCurrent(int _Inverter_ID, int speed) {
     Message message;
     // create ID
-    uint8_t Reg_ID = 0x000001;
+    uint8_t Reg_ID = REG_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     //create datafield
     int candata[8];
@@ -80,7 +81,7 @@ void DTI::SetACCurrent(int _Inverter_ID, int speed) {
 void DTI::SetBrakeCurrent(int _Inverter_ID, int brake) {
     Message message;
     // create ID
-    uint8_t Reg_ID = 0x000002;
+    uint8_t Reg_ID = REG_BrakeCurrent;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -100,7 +101,7 @@ void DTI::SetBrakeCurrent(int _Inverter_ID, int brake) {
 void DTI::SetERPM(int _Inverter_ID, int speed) {
     Message message;
     // create ID
-    uint8_t Reg_ID = 0x000003;
+    uint8_t Reg_ID = REG_ERPM;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -119,7 +120,7 @@ void DTI::SetERPM(int _Inverter_ID, int speed) {
  */
 void DTI::SetPosition(int _Inverter_ID, int position) {
     Message message;
-    uint8_t Reg_ID = 0x000004;
+    uint8_t Reg_ID = REG_Position;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -139,7 +140,7 @@ void DTI::SetPosition(int _Inverter_ID, int position) {
  */
 void DTI::SetRelativeCurrent(int _Inverter_ID, int current) {
     Message message;
-    uint8_t Reg_ID = 0x000005;
+    uint8_t Reg_ID = REG_Relative_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -159,7 +160,7 @@ void DTI::SetRelativeCurrent(int _Inverter_ID, int current) {
  */
 void DTI::SetRelatieveBrakeCurrent(int _Inverter_ID, int brake) {
     Message message;
-    uint8_t Reg_ID = 0x000006;
+    uint8_t Reg_ID = REG_Relative_Brake_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -179,7 +180,7 @@ void DTI::SetRelatieveBrakeCurrent(int _Inverter_ID, int brake) {
 void DTI::SetmaximumACcurrent(int _Inverter_ID, int max_AC) {
     Message message;
     // create ID
-    uint8_t Reg_ID = 0x000008;
+    uint8_t Reg_ID = REG_Set_Max_AC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
      // create datafield
     int candata[8];
@@ -199,7 +200,7 @@ void DTI::SetmaximumACcurrent(int _Inverter_ID, int max_AC) {
 void DTI::SetMaximumACBrakeCurrent(int _Inverter_ID, int current) {
     Message message;
     // createID
-    uint8_t Reg_ID = 0x000001;
+    uint8_t Reg_ID = REG_Set_Max_brake_AC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -219,7 +220,7 @@ void DTI::SetMaximumACBrakeCurrent(int _Inverter_ID, int current) {
 void DTI::SetMaximumDCcurrent(int _Inverter_ID,int max_DC){
     Message message;
     // create ID
-    uint8_t Reg_ID = 0x00000A;
+    uint8_t Reg_ID = REG_Set_Max_DC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -239,7 +240,7 @@ void DTI::SetMaximumDCcurrent(int _Inverter_ID,int max_DC){
 void DTI::SetmaximumDCBrakeCurrent(int _Inverter_ID, int speed) {
     Message message;
     // createID
-    uint8_t Reg_ID = 0x000001;
+    uint8_t Reg_ID = REG_Set_Max_brake_DC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -258,7 +259,7 @@ void DTI::SetmaximumDCBrakeCurrent(int _Inverter_ID, int speed) {
 void DTI::DriveEnable(int _Inverter_ID){
     Message message;
     // createID
-    uint8_t Reg_ID = 0x00000C;
+    uint8_t Reg_ID = REG_Enable;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
     int candata[8];
@@ -270,7 +271,152 @@ void DTI::DriveEnable(int _Inverter_ID){
     CAN.send(message);
 }
 
-void
+/**
+ *Read incomming message and add data for logging
+ *Informative use for Python Interface
+ * Use for 
+
+ */
+void DTI:: Logging(Message reading){
+    MessageID = reading.id
+    switch (MessageID)
+    {
+    case TRANSMIT_Control_ID:
+        PrintIDlogging("TRANSMIT_Control_ID", reading);
+
+        // update DTI logging variables 
+        control_Mode = reading.datafield[0];
+        Target_Iq = (reading.datafield[1] << 8) | reading.datafield[2];
+        m_pos = (reading.datafield[3] << 8) | reading.datafield[4];
+        M_still = reading.datafield[7];
+        break;
+
+    case TRANSMIT_ERPM_ID:
+        PrintIDlogging("TRANSMIT_ERPM_ID", reading);
+
+        // update DTI logging variables 
+        ERPM = (reading.datafield[0] << 16) | (reading.datafield[1] << 8) | reading.datafield[2]; 
+        Duty_Cycle = (reading.datafield[4] << 8) | reading.datafield[5];
+        V_input = (reading.datafield[6] << 8) | reading.datafield[7];
+        break;
+
+    case TRANSMIT_ACDC_Current_ID:
+        PrintIDlogging("TRANSMIT_ACDC_Current_ID", reading);
+
+        // update DTI logging variables 
+        AC_current = (reading.datafield[0] << 8) | reading.datafield[1];
+        DC_current = (reading.datafield[2] << 8) | reading.datafield[3];
+        break;
+
+    case TRANSMIT_Temp_ID:
+        PrintIDlogging("TRANSMIT_Temp_ID", reading);
+
+        // update DTI logging variables 
+        T_controller = (reading.datafield[0] << 8) | reading.datafield[1];
+        T_motor = (reading.datafield[2] << 8) | reading.datafield[3];
+        Fault_code = reading.datafield[4];
+
+        // process information
+        if (Fault_code != 0x00){
+            Print_FaultCode();
+        }
+        break;
+
+    case TRANSMIT_Id_Iq_ID:
+        PrintIDlogging("TRANSMIT_Id_Iq_ID", reading);
+
+        // update DTI logging variables 
+        Id = (reading.datafield[0] << 22) | (reading.datafield[1] << 16) | (reading.datafield[2] << 8) | reading.datafield[3];
+        Iq = (reading.datafield[0] << 22) | (reading.datafield[1] << 16) | (reading.datafield[2] << 8) | reading.datafield[3];
+        break;
+
+    case TRANSMIT_Throttle_ID:
+        PrintIDlogging("TRANSMIT_Throttle_ID", reading);
+
+        // update DTI logging variables 
+        throttle = reading.datafield[0];
+        brake = reading.datafield[1];
+        digital_IN =reading.datafield[2];
+        drive_EN =reading.datafield[3];
+        limit_config = reading.datafield[4];
+        RPM_limit = reading.datafield[5]; 
+        break;
+
+    case TRANSMIT_Max_ACcurrent_ID:
+        PrintIDlogging("TRANSMIT_Max_ACcurrent_ID", reading);
+
+        // update DTI logging variables 
+        Max_AC_current = (reading.datafield[0] << 8) | reading.datafield[1];
+        Avail_max_AC_current = (reading.datafield[2] << 8) | reading.datafield[3];
+        Min_AC_current = (reading.datafield[4] << 8) | reading.datafield[5];
+        Avail_min_AC_current = (reading.datafield[6] << 8) | reading.datafield[7];
+        break;
+
+    case TRANSMIT_Max_DCcurrent_ID:
+        PrintIDlogging("TRANSMIT_Max_DCcurrent_ID", reading);
+
+        // update DTI logging variables 
+        Max_DC_current = (reading.datafield[0] << 8) | reading.datafield[1];
+        Avail_max_DC_current = (reading.datafield[2] << 8) | reading.datafield[3];
+        Min_DC_current =(reading.datafield[4] << 8) | reading.datafield[5];
+        Avail_min_DC_current =(reading.datafield[6] << 8) | reading.datafield[7];
+        break;
+    
+    default:
+        break;
+    }
+
+}
+
+void DTI::PrintIDlogging(String ID,Message Reading){
+        Serial.print(ID);
+        Serial.print(" :")
+        for(int i = 0; i > reading.packet_size; i++){
+            Serial.print(reading.datafield[i]);
+            Serial.print(", ")
+        }
+        Serial.println(" :END")
+        break;
+}
+
+void DTI::PrintFaultCode(){
+    switch (FaultCode)
+    {
+    case 0x01:
+        Serial.println("FAULT CODE! : Overvoltage");
+        break;
+    case 0x02:
+        Serial.println("FAULT CODE! : Undervoltage");
+        break;
+    case 0x03:
+        Serial.println("FAULT CODE! : DRV transistor drive error");
+        break;
+    case 0x04:
+        Serial.println("FAULT CODE! : ABS OverCurrent (AC)");
+        break;
+    case 0x05:
+        Serial.println("FAULT CODE! : CONTROLER Overtemp");
+        break;
+    case 0x06:
+        Serial.println("FAULT CODE! : MOTOR Overtemp");
+        break;
+    case 0x07:
+        Serial.println("FAULT CODE! : Sensor wire fault");
+        break;
+    case 0x08:
+        Serial.println("FAULT CODE! : Sensor general fault");
+        break;
+    case 0x09: 
+        Serial.println("FAULT CODE! : CAN Command Error");
+        break;
+    case 0x0A:
+        Serial.println("FAULT CODE! : Analog Input Error");
+        break;
+    default:
+        Serial.println("FAULT CODE! : Unknow Error Code");
+        break;
+    }
+}
 
 
 

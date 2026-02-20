@@ -30,6 +30,8 @@ public:
     void SetMaximumDCcurrent(int _Inverter_ID,int max_DC);
     void SetmaximumDCBrakeCurrent(int _Inverter_ID, int speed);
     void DriveEnable(int _Inverter_ID);
+    void Logging(Message reading);
+    void :PrintIDlogging(String ID,Message Reading); 
 
 private:
     #if defined(ARDUINO_FEATHER_M4_CAN)
@@ -37,14 +39,43 @@ private:
     #else
         CANRP2040 CAN;
     #endif
-    int m_speed;
-    int m_torque;
-    int m_status;
-    int m_airTemperature;
-    int m_inverterTemperature;
-    int m_motorTemperature;
-    int m_Vdc;
-    int m_current;
+
+    // data given in Control ID
+    int control_Mode;
+    int Target_Iq;
+    int m_pos;
+    int m_still;
+    //data   given in ERPM ID
+    int ERPM;
+    int Duty_Cycle;
+    int V_input;
+    // data given in ACDC current ID
+    int AC_current;
+    int DC_current;
+    // data  given in Temp ID
+    int T_controller;
+    int T_motor;
+    int Fault_code;
+    // data given in Id Iq ID
+    int Id;
+    int Iq;
+    // data given in throttle ID
+    int throttle;
+    int brake;
+    int digital_IN;
+    int drive_EN;
+    int limit_config;
+    int RPM_limit;
+    // data give in MAX AC current ID
+    int Max_AC_current;
+    int Avail_max_AC_current;
+    int Min_AC_current;
+    int Avail_min_AC_current; 
+    // data given in MAC DC current ID
+    int Max_DC_current;
+    int Avail_max_DC_current; 
+    int Min_DC_current;
+    int Avail_min_DC_current;
 };
 
-#endif // INVERTOR_H
+#endif // 
