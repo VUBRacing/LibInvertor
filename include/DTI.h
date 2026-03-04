@@ -17,7 +17,7 @@ public:
         void setup(CANRP2040 *mycan);
     #endif
 
-    int Make_Full_ID(int _Inveter_ID, int Reg_ID);
+    uint16_t Make_Full_ID(int _Inveter_ID, int Reg_ID);
     void BigEndian(int number, uint8_t* buffer, uint8_t length);
     void SetACCurrent(int _Inverter_ID, int speed);
     void SetBrakeCurrent(int _Inverter_ID, int Brake);

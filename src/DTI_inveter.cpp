@@ -64,10 +64,10 @@ void DTI::SetACCurrent(int _Inverter_ID, int speed) {
     uint8_t Reg_ID = REG_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     //create datafield
-    int candata[8];
-    BigEndian(speed, candata,2)
+    uint8_t candata[8];
+    BigEndian(speed, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //Send message
     CAN.send(message);
@@ -84,10 +84,10 @@ void DTI::SetBrakeCurrent(int _Inverter_ID, int brake) {
     uint8_t Reg_ID = REG_BrakeCurrent;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(brake, candata,2)
+    uint8_t candata[8];
+    BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -104,10 +104,10 @@ void DTI::SetERPM(int _Inverter_ID, int speed) {
     uint8_t Reg_ID = REG_ERPM;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(Speed, candata,2)
+    uint8_t candata[8];
+    BigEndian(Speed, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -123,10 +123,10 @@ void DTI::SetPosition(int _Inverter_ID, int position) {
     uint8_t Reg_ID = REG_Position;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(position, candata,2)
+    uint8_t candata[8];
+    BigEndian(position, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -143,10 +143,10 @@ void DTI::SetRelativeCurrent(int _Inverter_ID, int current) {
     uint8_t Reg_ID = REG_Relative_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(current, candata,2)
+    uint8_t candata[8];
+    BigEndian(current, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -163,10 +163,10 @@ void DTI::SetRelatieveBrakeCurrent(int _Inverter_ID, int brake) {
     uint8_t Reg_ID = REG_Relative_Brake_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(brake, candata,2)
+    uint8_t candata[8];
+    BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -183,10 +183,10 @@ void DTI::SetmaximumACcurrent(int _Inverter_ID, int max_AC) {
     uint8_t Reg_ID = REG_Set_Max_AC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
      // create datafield
-    int candata[8];
-    BigEndian(max_AC, candata,2)
+    uint8_t candata[8];
+    BigEndian(max_AC, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -203,10 +203,10 @@ void DTI::SetMaximumACBrakeCurrent(int _Inverter_ID, int current) {
     uint8_t Reg_ID = REG_Set_Max_brake_AC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(current, candata,2)
+    uint8_t candata[8];
+    BigEndian(current, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);;
@@ -223,10 +223,10 @@ void DTI::SetMaximumDCcurrent(int _Inverter_ID,int max_DC){
     uint8_t Reg_ID = REG_Set_Max_DC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(brake, candata,2)
+    uint8_t candata[8];
+    BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);  
@@ -243,10 +243,10 @@ void DTI::SetmaximumDCBrakeCurrent(int _Inverter_ID, int speed) {
     uint8_t Reg_ID = REG_Set_Max_brake_DC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(brake, candata,2)
+    uint8_t candata[8];
+    BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -262,10 +262,10 @@ void DTI::DriveEnable(int _Inverter_ID){
     uint8_t Reg_ID = REG_Enable;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
     // create datafield
-    int candata[8];
-    BigEndian(0x01, candata,1)
+    uint8_t candata[8];
+    BigEndian(0x01, candata,1);
     for (int i = 0; i < 8; i++) {
-        Message.datafield.pushback(candata[i]);
+        message.datafield.push_back(candata[i]);
     }
     // send message
     CAN.send(message);
