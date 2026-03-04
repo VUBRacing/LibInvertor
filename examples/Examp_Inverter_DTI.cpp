@@ -22,4 +22,7 @@ void setup(){
 void loop(){
     int current;
     myInverter.SetACCurrent(current);
+
+    //logging can de DTI
+    
 }

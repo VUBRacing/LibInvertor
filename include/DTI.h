@@ -31,7 +31,7 @@ public:
     void SetmaximumDCBrakeCurrent(int _Inverter_ID, int speed);
     void DriveEnable(int _Inverter_ID);
     void Logging(Message reading);
-    void :PrintIDlogging(String ID,Message Reading); 
+    void PrintIDlogging(String ID,Message Reading); 
 
 private:
     #if defined(ARDUINO_FEATHER_M4_CAN)

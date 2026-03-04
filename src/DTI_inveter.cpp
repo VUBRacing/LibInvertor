@@ -294,7 +294,7 @@ void DTI:: Logging(Message reading){
     case TRANSMIT_ERPM_ID:
         PrintIDlogging("TRANSMIT_ERPM_ID", reading);
 
-        // update DTI logging variables 
+        // update DTI logging variables
         ERPM = (reading.datafield[0] << 16) | (reading.datafield[1] << 8) | reading.datafield[2]; 
         Duty_Cycle = (reading.datafield[4] << 8) | reading.datafield[5];
         V_input = (reading.datafield[6] << 8) | reading.datafield[7];
@@ -368,7 +368,7 @@ void DTI:: Logging(Message reading){
 
 }
 
-void DTI::PrintIDlogging(String ID,Message Reading){
+void DTI::PrintIDlogging(String ID ,Message Reading){
         Serial.print(ID);
         Serial.print(" :")
         for(int i = 0; i > reading.packet_size; i++){
