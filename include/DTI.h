@@ -17,7 +17,7 @@ public:
         void setup(CANRP2040 *mycan);
     #endif
 
-    uint16_t Make_Full_ID(int _Inveter_ID, int Reg_ID);
+    uint16_t Make_Full_ID(uint8_t _Inveter_ID, uint8_t Reg_ID);
     void BigEndian(int number, uint8_t* buffer, uint8_t length);
     void SetACCurrent(int _Inverter_ID, int speed);
     void SetBrakeCurrent(int _Inverter_ID, int Brake);
@@ -32,6 +32,7 @@ public:
     void DriveEnable(int _Inverter_ID);
     void Logging(Message reading);
     void PrintIDlogging(String ID,Message Reading); 
+    void PrintFaultCode();
 
 private:
     #if defined(ARDUINO_FEATHER_M4_CAN)

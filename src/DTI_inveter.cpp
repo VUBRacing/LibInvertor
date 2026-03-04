@@ -13,7 +13,7 @@ ex. - ID inverter: 67 HEX?
     Weird can CAN have this big of ID???
     
     
-Datafield: Data can be send undermany types in byte
+data_field: Data can be send undermany types in byte
     - DTI system uses Big_Edian
     */
 
@@ -63,11 +63,11 @@ void DTI::SetACCurrent(int _Inverter_ID, int speed) {
     // create ID
     uint8_t Reg_ID = REG_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    //create datafield
+    //create data_field
     uint8_t candata[8];
     BigEndian(speed, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //Send message
     CAN.send(message);
@@ -83,11 +83,11 @@ void DTI::SetBrakeCurrent(int _Inverter_ID, int brake) {
     // create ID
     uint8_t Reg_ID = REG_BrakeCurrent;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -103,11 +103,11 @@ void DTI::SetERPM(int _Inverter_ID, int speed) {
     // create ID
     uint8_t Reg_ID = REG_ERPM;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
-    BigEndian(Speed, candata,2);
+    BigEndian(speed, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -122,11 +122,11 @@ void DTI::SetPosition(int _Inverter_ID, int position) {
     Message message;
     uint8_t Reg_ID = REG_Position;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(position, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -142,11 +142,11 @@ void DTI::SetRelativeCurrent(int _Inverter_ID, int current) {
     Message message;
     uint8_t Reg_ID = REG_Relative_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(current, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -162,11 +162,11 @@ void DTI::SetRelatieveBrakeCurrent(int _Inverter_ID, int brake) {
     Message message;
     uint8_t Reg_ID = REG_Relative_Brake_Current;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -182,11 +182,11 @@ void DTI::SetmaximumACcurrent(int _Inverter_ID, int max_AC) {
     // create ID
     uint8_t Reg_ID = REG_Set_Max_AC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-     // create datafield
+     // create data_field
     uint8_t candata[8];
     BigEndian(max_AC, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -202,11 +202,11 @@ void DTI::SetMaximumACBrakeCurrent(int _Inverter_ID, int current) {
     // createID
     uint8_t Reg_ID = REG_Set_Max_brake_AC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(current, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);;
@@ -222,11 +222,11 @@ void DTI::SetMaximumDCcurrent(int _Inverter_ID,int max_DC){
     // create ID
     uint8_t Reg_ID = REG_Set_Max_DC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);  
@@ -242,11 +242,11 @@ void DTI::SetmaximumDCBrakeCurrent(int _Inverter_ID, int speed) {
     // createID
     uint8_t Reg_ID = REG_Set_Max_brake_DC;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(brake, candata,2);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     //send message
     CAN.send(message);
@@ -261,11 +261,11 @@ void DTI::DriveEnable(int _Inverter_ID){
     // createID
     uint8_t Reg_ID = REG_Enable;
     message.id = Make_Full_ID(_Inverter_ID, Reg_ID);
-    // create datafield
+    // create data_field
     uint8_t candata[8];
     BigEndian(0x01, candata,1);
     for (int i = 0; i < 8; i++) {
-        message.datafield.push_back(candata[i]);
+        message.data_field.push_back(candata[i]);
     }
     // send message
     CAN.send(message);
@@ -278,43 +278,43 @@ void DTI::DriveEnable(int _Inverter_ID){
 
  */
 void DTI:: Logging(Message reading){
-    MessageID = reading.id
+    int MessageID = reading.id;
     switch (MessageID)
     {
     case TRANSMIT_Control_ID:
         PrintIDlogging("TRANSMIT_Control_ID", reading);
 
         // update DTI logging variables 
-        control_Mode = reading.datafield[0];
-        Target_Iq = (reading.datafield[1] << 8) | reading.datafield[2];
-        m_pos = (reading.datafield[3] << 8) | reading.datafield[4];
-        M_still = reading.datafield[7];
+        control_Mode = reading.data_field[0];
+        Target_Iq = (reading.data_field[1] << 8) | reading.data_field[2];
+        m_pos = (reading.data_field[3] << 8) | reading.data_field[4];
+        m_still = reading.data_field[7];
         break;
 
     case TRANSMIT_ERPM_ID:
         PrintIDlogging("TRANSMIT_ERPM_ID", reading);
 
         // update DTI logging variables
-        ERPM = (reading.datafield[0] << 16) | (reading.datafield[1] << 8) | reading.datafield[2]; 
-        Duty_Cycle = (reading.datafield[4] << 8) | reading.datafield[5];
-        V_input = (reading.datafield[6] << 8) | reading.datafield[7];
+        ERPM = (reading.data_field[0] << 16) | (reading.data_field[1] << 8) | reading.data_field[2]; 
+        Duty_Cycle = (reading.data_field[4] << 8) | reading.data_field[5];
+        V_input = (reading.data_field[6] << 8) | reading.data_field[7];
         break;
 
     case TRANSMIT_ACDC_Current_ID:
         PrintIDlogging("TRANSMIT_ACDC_Current_ID", reading);
 
         // update DTI logging variables 
-        AC_current = (reading.datafield[0] << 8) | reading.datafield[1];
-        DC_current = (reading.datafield[2] << 8) | reading.datafield[3];
+        AC_current = (reading.data_field[0] << 8) | reading.data_field[1];
+        DC_current = (reading.data_field[2] << 8) | reading.data_field[3];
         break;
 
     case TRANSMIT_Temp_ID:
         PrintIDlogging("TRANSMIT_Temp_ID", reading);
 
         // update DTI logging variables 
-        T_controller = (reading.datafield[0] << 8) | reading.datafield[1];
-        T_motor = (reading.datafield[2] << 8) | reading.datafield[3];
-        Fault_code = reading.datafield[4];
+        T_controller = (reading.data_field[0] << 8) | reading.data_field[1];
+        T_motor = (reading.data_field[2] << 8) | reading.data_field[3];
+        Fault_code = reading.data_field[4];
 
         // process information
         if (Fault_code != 0x00){
@@ -326,40 +326,40 @@ void DTI:: Logging(Message reading){
         PrintIDlogging("TRANSMIT_Id_Iq_ID", reading);
 
         // update DTI logging variables 
-        Id = (reading.datafield[0] << 22) | (reading.datafield[1] << 16) | (reading.datafield[2] << 8) | reading.datafield[3];
-        Iq = (reading.datafield[0] << 22) | (reading.datafield[1] << 16) | (reading.datafield[2] << 8) | reading.datafield[3];
+        Id = (reading.data_field[0] << 22) | (reading.data_field[1] << 16) | (reading.data_field[2] << 8) | reading.data_field[3];
+        Iq = (reading.data_field[0] << 22) | (reading.data_field[1] << 16) | (reading.data_field[2] << 8) | reading.data_field[3];
         break;
 
     case TRANSMIT_Throttle_ID:
         PrintIDlogging("TRANSMIT_Throttle_ID", reading);
 
         // update DTI logging variables 
-        throttle = reading.datafield[0];
-        brake = reading.datafield[1];
-        digital_IN =reading.datafield[2];
-        drive_EN =reading.datafield[3];
-        limit_config = reading.datafield[4];
-        RPM_limit = reading.datafield[5]; 
+        throttle = reading.data_field[0];
+        brake = reading.data_field[1];
+        digital_IN =reading.data_field[2];
+        drive_EN =reading.data_field[3];
+        limit_config = reading.data_field[4];
+        RPM_limit = reading.data_field[5]; 
         break;
 
     case TRANSMIT_Max_ACcurrent_ID:
         PrintIDlogging("TRANSMIT_Max_ACcurrent_ID", reading);
 
         // update DTI logging variables 
-        Max_AC_current = (reading.datafield[0] << 8) | reading.datafield[1];
-        Avail_max_AC_current = (reading.datafield[2] << 8) | reading.datafield[3];
-        Min_AC_current = (reading.datafield[4] << 8) | reading.datafield[5];
-        Avail_min_AC_current = (reading.datafield[6] << 8) | reading.datafield[7];
+        Max_AC_current = (reading.data_field[0] << 8) | reading.data_field[1];
+        Avail_max_AC_current = (reading.data_field[2] << 8) | reading.data_field[3];
+        Min_AC_current = (reading.data_field[4] << 8) | reading.data_field[5];
+        Avail_min_AC_current = (reading.data_field[6] << 8) | reading.data_field[7];
         break;
 
     case TRANSMIT_Max_DCcurrent_ID:
         PrintIDlogging("TRANSMIT_Max_DCcurrent_ID", reading);
 
         // update DTI logging variables 
-        Max_DC_current = (reading.datafield[0] << 8) | reading.datafield[1];
-        Avail_max_DC_current = (reading.datafield[2] << 8) | reading.datafield[3];
-        Min_DC_current =(reading.datafield[4] << 8) | reading.datafield[5];
-        Avail_min_DC_current =(reading.datafield[6] << 8) | reading.datafield[7];
+        Max_DC_current = (reading.data_field[0] << 8) | reading.data_field[1];
+        Avail_max_DC_current = (reading.data_field[2] << 8) | reading.data_field[3];
+        Min_DC_current =(reading.data_field[4] << 8) | reading.data_field[5];
+        Avail_min_DC_current =(reading.data_field[6] << 8) | reading.data_field[7];
         break;
     
     default:
@@ -368,19 +368,19 @@ void DTI:: Logging(Message reading){
 
 }
 
-void DTI::PrintIDlogging(String ID ,Message Reading){
+void DTI::PrintIDlogging(String ID ,Message reading){
         Serial.print(ID);
-        Serial.print(" :")
+        Serial.print(" :");
         for(int i = 0; i > reading.packet_size; i++){
-            Serial.print(reading.datafield[i]);
+            Serial.print(reading.data_field[i]);
             Serial.print(", ")
         }
-        Serial.println(" :END")
+        Serial.println(" :END");
         break;
 }
 
 void DTI::PrintFaultCode(){
-    switch (FaultCode)
+    switch (Fault_code)
     {
     case 0x01:
         Serial.println("FAULT CODE! : Overvoltage");
