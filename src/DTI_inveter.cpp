@@ -318,7 +318,7 @@ void DTI:: Logging(Message reading){
 
         // process information
         if (Fault_code != 0x00){
-            Print_FaultCode();
+            PrintFaultCode();
         }
         break;
 
@@ -373,10 +373,9 @@ void DTI::PrintIDlogging(String ID ,Message reading){
         Serial.print(" :");
         for(int i = 0; i > reading.packet_size; i++){
             Serial.print(reading.data_field[i]);
-            Serial.print(", ")
+            Serial.print(", ");
         }
         Serial.println(" :END");
-        break;
 }
 
 void DTI::PrintFaultCode(){
