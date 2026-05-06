@@ -70,7 +70,7 @@ void DTI::SetACCurrent(int _Inverter_ID, int speed) {
         message.data_field.push_back(candata[i]);
     }
     //Send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -90,7 +90,7 @@ void DTI::SetBrakeCurrent(int _Inverter_ID, int brake) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -110,7 +110,7 @@ void DTI::SetERPM(int _Inverter_ID, int speed) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -129,7 +129,7 @@ void DTI::SetPosition(int _Inverter_ID, int position) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -149,7 +149,7 @@ void DTI::SetRelativeCurrent(int _Inverter_ID, int current) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -169,7 +169,7 @@ void DTI::SetRelatieveBrakeCurrent(int _Inverter_ID, int brake) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -189,7 +189,7 @@ void DTI::SetmaximumACcurrent(int _Inverter_ID, int max_AC) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -209,7 +209,7 @@ void DTI::SetMaximumACBrakeCurrent(int _Inverter_ID, int current) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);;
+    CAN->send(message);;
 }
 
 /**
@@ -229,7 +229,7 @@ void DTI::SetMaximumDCcurrent(int _Inverter_ID,int max_DC){
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);  
+    CAN->send(message);  
 }
 
 /**
@@ -249,7 +249,7 @@ void DTI::SetmaximumDCBrakeCurrent(int _Inverter_ID, int speed) {
         message.data_field.push_back(candata[i]);
     }
     //send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
@@ -268,7 +268,7 @@ void DTI::DriveEnable(int _Inverter_ID){
         message.data_field.push_back(candata[i]);
     }
     // send message
-    CAN.send(message);
+    CAN->send(message);
 }
 
 /**
