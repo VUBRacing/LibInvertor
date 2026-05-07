@@ -36,9 +36,9 @@ public:
 
 private:
     #if defined(ARDUINO_FEATHER_M4_CAN)
-        CANAdafruit CAN;
+        CANAdafruit *CAN;
     #else
-        CANRP2040 CAN;
+        CANRP2040 *CAN;
     #endif
 
     // data given in Control ID

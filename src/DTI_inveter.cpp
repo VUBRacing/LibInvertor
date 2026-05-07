@@ -19,11 +19,11 @@ data_field: Data can be send undermany types in byte
 
 #if defined(ARDUINO_FEATHER_M4_CAN)
     void DTI::setup(CANAdafruit *mycan) {
-        CAN = *mycan;
+        CAN = mycan;
     }
 #else
     void DTI::setup(CANRP2040 *mycan) {
-        CAN = *mycan;
+        CAN = mycan;
     }
 #endif
 
